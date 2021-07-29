@@ -1,22 +1,28 @@
 let fs = require('fs');
 const path = require('path');
 
+let types = {
+    media: ["mp4", "mkv"],
+    archives: ['zip', '7z', 'rar', 'tar', 'gz', 'ar', 'iso', "xz"],
+    documents: ['docx', 'doc', 'pdf', 'xlsx', 'xls', 'odt', 'ods', 'odp', 'odg', 'odf', 'txt', 'ps', 'tex'],
+    app: ['exe', 'dmg', 'pkg', "deb"]
+}
 
 function fn(props){
     let folderPath = props;
     let dirContent = fs.readdirSync(folderPath);
     let organizeDirPath = path.join(folderPath, "organized_files")
-    let pdfsPath = path.join(organizeDirPath, "Pdfs");
-    let picturesPath = path.join(organizeDirPath, "Pictures");
-    let videosPath = path.join(organizeDirPath, "Videos");
-    let filesPath = path.join(organizeDirPath, "Files");
+    let mediaPath = path.join(organizeDirPath, "media");
+    let archivesPath = path.join(organizeDirPath, "archives");
+    let documentsPath = path.join(organizeDirPath, "documents");
+    let appPath = path.join(organizeDirPath, "app");
     let others = path.join(organizeDirPath, "Others");
 
     fs.mkdirSync(organizeDirPath);
-    fs.mkdirSync(pdfsPath);
-    fs.mkdirSync(picturesPath);
-    fs.mkdirSync(videosPath);
-    fs.mkdirSync(filesPath);
+    fs.mkdirSync(mediaPath);
+    fs.mkdirSync(archivesPath);
+    fs.mkdirSync(documentsPath);
+    fs.mkdirSync(appPath);
     fs.mkdirSync(others);
 
     for(let i = 0; i < dirContent.length; ++ i){

@@ -3,12 +3,14 @@ let fs = require('fs');
 
 function fun(props){
     let dirName = path.basename(props);
-    let res = `  |__${dirName} \n`;
+    let res = `└──${dirName} \n`;
 
     let content = fs.readdirSync(props);
-    for(let i = 0; i < content.length; ++ i){
-        res += "       |-----" + content[i] + "\n";
+    for(let i = 0; i < content.length - 1; ++ i){
+        res += "\t├──" + content[i] + "\n";
     }
+
+    res += "\t└──" + content[content.length - 1] + "\n";
     console.log(res);
 }
 
