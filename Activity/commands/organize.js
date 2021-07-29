@@ -3,9 +3,9 @@ const path = require('path');
 
 let types = {
     media: ["mp4", "mkv"],
-    archives: ['zip', '7z', 'rar', 'tar', 'gz', 'ar', 'iso', "xz"],
+    archives: ['zip', '7z', 'rar', 'tar', 'gz', 'ar', 'iso', "xz", "json"],
     documents: ['docx', 'doc', 'pdf', 'xlsx', 'xls', 'odt', 'ods', 'odp', 'odg', 'odf', 'txt', 'ps', 'tex'],
-    app: ['exe', 'dmg', 'pkg', "deb"]
+    app: ['exe', 'dmg', 'PNG', "deb"]
 }
 
 function fn(props){
@@ -29,36 +29,41 @@ function fn(props){
         let content = dirContent[i];
         let extension = content.split('.')[1];
         let srcFilePath = path.join(folderPath, dirContent[i]);
-        switch(extension){
-            case "pdf":
-                console.log("Moving " + path.basename(srcFilePath) + " to " + pdfsPath);
-                let desFilePathPdf = path.join(pdfsPath, path.basename(srcFilePath));
-                fs.copyFileSync(srcFilePath, desFilePathPdf);
-                console.log(path.basename(srcFilePath) + " is Successfully moved to ----> " + pdfsPath);
+        let type = "";
+
+        for(let key in types){
+            for(let j = 0; j < types[key].length; ++ j){
+                if(types[key][j] == extension){
+                    type = key;
+                    break;
+                }
+            }
+        }
+
+        switch(type){
+            case "documents":
+                console.log("Moving " + path.basename(srcFilePath) + " to " + documentsPath);
+                let desFilePathDocs = path.join(documentsPath, path.basename(srcFilePath));
+                fs.copyFileSync(srcFilePath, desFilePathDocs);
+                console.log(path.basename(srcFilePath) + " is Successfully moved to ----> " + documentsPath);
                 break;
-            case "json":
-                console.log("Moving " + path.basename(srcFilePath) + " to " + filesPath);
-                let desFilePathFilesJson = path.join(filesPath, path.basename(srcFilePath));
-                fs.copyFileSync(srcFilePath, desFilePathFilesJson);
-                console.log(path.basename(srcFilePath) + " is Successfully moved to ----> " + filesPath);
+            case "archives":
+                console.log("Moving " + path.basename(srcFilePath) + " to " + archivesPath);
+                let desFilePathFilesArc = path.join(archivesPath, path.basename(srcFilePath));
+                fs.copyFileSync(srcFilePath, desFilePathFilesArc);
+                console.log(path.basename(srcFilePath) + " is Successfully moved to ----> " + archivesPath);
                 break;
-            case "txt":
-                console.log("Moving " + path.basename(srcFilePath) + " to " + filesPath);
-                let desFilePathFilesTxt = path.join(filesPath, path.basename(srcFilePath));
-                fs.copyFileSync(srcFilePath, desFilePathFilesTxt);
-                console.log(path.basename(srcFilePath) + " is Successfully moved to ----> " + filesPath);
+            case "media":
+                console.log("Moving " + path.basename(srcFilePath) + " to " + mediaPath);
+                let desFilePathMedia = path.join(mediaPath, path.basename(srcFilePath));
+                fs.copyFileSync(srcFilePath, desFilePathMedia);
+                console.log(path.basename(srcFilePath) + " is Successfully moved to ----> " + mediaPath);
                 break;
-            case "mkv":
-                console.log("Moving " + path.basename(srcFilePath) + " to " + videosPath);
-                let desFilePathVideos = path.join(videosPath, path.basename(srcFilePath));
-                fs.copyFileSync(srcFilePath, desFilePathVideos);
-                console.log(path.basename(srcFilePath) + " is Successfully moved to ----> " + videosPath);
-                break;
-            case "PNG":
-                console.log("Moving " + path.basename(srcFilePath) + " to " + picturesPath);
-                let desFilePathPictures = path.join(picturesPath, path.basename(srcFilePath));
-                fs.copyFileSync(srcFilePath, desFilePathPictures);
-                console.log(path.basename(srcFilePath) + " is Successfully moved to ----> " + picturesPath);
+            case "app":
+                console.log("Moving " + path.basename(srcFilePath) + " to " + appPath);
+                let desFilePathApp = path.join(appPath, path.basename(srcFilePath));
+                fs.copyFileSync(srcFilePath, desFilePathApp);
+                console.log(path.basename(srcFilePath) + " is Successfully moved to ----> " + appPath);
                 break;
             default:
                 console.log("Moving " + path.basename(srcFilePath) + " to " + others);
@@ -66,6 +71,7 @@ function fn(props){
                 fs.copyFileSync(srcFilePath, desFilePathOters);
                 console.log(path.basename(srcFilePath) + " is Successfully moved to ----> " + others);
         }    
+        
 
     }
 }
