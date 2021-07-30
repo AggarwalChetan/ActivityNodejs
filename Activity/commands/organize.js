@@ -28,6 +28,11 @@ function fn(props){
     for(let i = 0; i < dirContent.length; ++ i){
         let content = dirContent[i];
         let extension = content.split('.')[1];
+        
+        if(extension == undefined){
+            continue;
+        }
+
         let srcFilePath = path.join(folderPath, dirContent[i]);
         let type = "";
 
